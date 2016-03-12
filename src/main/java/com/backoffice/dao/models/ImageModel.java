@@ -1,0 +1,49 @@
+package com.backoffice.dao.models;
+
+import java.io.Serializable;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+@Entity(name = "images")
+public class ImageModel implements Serializable {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
+
+	private String imageName;
+
+	@ManyToOne(optional = true)
+	@JoinColumn(name = "sku", referencedColumnName = "sku")
+	private ProductModel product;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(final Long id) {
+		this.id = id;
+	}
+
+	public String getImageName() {
+		return imageName;
+	}
+
+	public void setImageName(final String imageName) {
+		this.imageName = imageName;
+	}
+
+	public ProductModel getProduct() {
+		return product;
+	}
+
+	public void setProduct(final ProductModel product) {
+		this.product = product;
+	}
+
+}

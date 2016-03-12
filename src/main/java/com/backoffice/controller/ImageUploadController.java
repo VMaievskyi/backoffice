@@ -4,6 +4,8 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 
+import javax.ws.rs.BadRequestException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -37,6 +39,7 @@ public class ImageUploadController {
 				stream.close();
 
 			} catch (final Exception e) {
+				throw new BadRequestException("failed to upload file");
 			}
 		}
 	}

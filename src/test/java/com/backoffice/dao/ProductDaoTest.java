@@ -15,6 +15,7 @@ import com.backoffice.Starter;
 import com.backoffice.dao.models.ImageModel;
 import com.backoffice.dao.models.ProductAttributeModel;
 import com.backoffice.dao.models.ProductModel;
+import com.backoffice.dao.models.StockModel;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
@@ -22,6 +23,8 @@ import com.google.common.collect.Lists;
 @SpringApplicationConfiguration(Starter.class)
 public class ProductDaoTest {
 
+	private static final long RESERVED_QUANTITY = 5L;
+	private static final long AVAILABLE_QUANTITY = 10L;
 	private static final double DOUBLE_COMPARISON_DELTA = 0.01;
 	private static final String PRODUCT_DESCRIPTION = "this is product description";
 	private static final double PRODUCT_PRICE = 5.5;
@@ -46,12 +49,15 @@ public class ProductDaoTest {
 		Assert.assertEquals("wrong price", PRODUCT_PRICE, product.getPrice(), DOUBLE_COMPARISON_DELTA);
 
 		Assert.assertEquals("wrong image count", 2, CollectionUtils.size(product.getImages()));
-		Assert.assertEquals("wrong image count", 2, CollectionUtils.size(product.getAttributes()));
+		Assert.assertEquals("wrong attribute count", 2, CollectionUtils.size(product.getAttributes()));
+		Assert.assertEquals("wrong stock available", AVAILABLE_QUANTITY, product.getStock().getAvailabeQuantity(),0.01);
+		Assert.assertEquals("wrong stock available", RESERVED_QUANTITY, product.getStock().getReservedQuantity(),0.01);
 	}
 
 	private ProductModel createProduct() {
 		final ProductModel product = new ProductModel();
 		product.setSku(UUID.randomUUID().toString());
+		product.setName("name");
 		product.setDescription(PRODUCT_DESCRIPTION);
 		product.setPrice(PRODUCT_PRICE);
 		final ArrayList<ImageModel> imageList = createImages(product);
@@ -59,7 +65,18 @@ public class ProductDaoTest {
 		final ArrayList<ProductAttributeModel> attributeList = createAttributes(product);
 		product.setImages(imageList);
 		product.setAttributes(attributeList);
+		
+		StockModel stock = initStock();
+		
+		product.setStock(stock);
 		return product;
+	}
+
+	private StockModel initStock() {
+		StockModel stock = new StockModel();
+		stock.setAvailabeQuantity(AVAILABLE_QUANTITY);
+		stock.setReservedQuantity(RESERVED_QUANTITY);
+		return stock;
 	}
 
 	private ArrayList<ProductAttributeModel> createAttributes(final ProductModel product) {

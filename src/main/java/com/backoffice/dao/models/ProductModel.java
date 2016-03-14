@@ -3,11 +3,14 @@ package com.backoffice.dao.models;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -15,6 +18,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 public class ProductModel {
 
 	@Id
+	@Column(unique = true)
 	private String sku;
 
 	@Lob
@@ -38,6 +42,10 @@ public class ProductModel {
 	@OneToMany(mappedBy = "product", targetEntity = ProductAttributeModel.class, fetch = FetchType.EAGER, cascade = {
 			CascadeType.ALL })
 	private List<ProductAttributeModel> attributes;
+
+	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinColumn(name = "stock_id")
+	private StockModel stock;
 
 	public String getDescription() {
 		return description;
@@ -83,6 +91,14 @@ public class ProductModel {
 			attributes.forEach(a -> a.setProduct(this));
 		}
 		this.attributes = attributes;
+	}
+
+	public StockModel getStock() {
+		return stock;
+	}
+
+	public void setStock(StockModel stock) {
+		this.stock = stock;
 	}
 
 }

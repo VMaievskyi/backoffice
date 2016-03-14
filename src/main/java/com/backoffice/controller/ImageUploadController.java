@@ -6,7 +6,10 @@ import java.io.FileOutputStream;
 
 import javax.ws.rs.BadRequestException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
@@ -23,7 +26,10 @@ import com.backoffice.facade.ImageFacade;
 @RequestMapping("/image")
 public class ImageUploadController {
 
-	private String fileLocation = "";
+	private static final Logger LOG = LoggerFactory.getLogger(ImageUploadController.class);
+
+	@Value("${imageRootFolder}")
+	private String root = "";
 
 	@Autowired
 	private ImageFacade imageFacade;
@@ -32,9 +38,11 @@ public class ImageUploadController {
 	@RequestMapping(method = RequestMethod.POST)
 	public void handleFileUpload(@RequestParam("name") final String name,
 			@RequestParam("file") final MultipartFile file) {
+		LOG.debug("handleFileUpload is called");
 
 		if (!file.isEmpty()) {
-			try (BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File(name)))) {
+			try (BufferedOutputStream stream = new BufferedOutputStream(
+					new FileOutputStream(new File(root + "/" + name)))) {
 				FileCopyUtils.copy(file.getInputStream(), stream);
 				stream.close();
 
@@ -46,15 +54,12 @@ public class ImageUploadController {
 
 	@RequestMapping(value = "/all", method = RequestMethod.GET, produces = "application/json")
 	public Iterable<ImageModel> getAllImages() {
+		LOG.debug("getAllImages is called");
 		return imageFacade.getAll();
 	}
 
-	public String getFileLocation() {
-		return fileLocation;
-	}
-
-	public void setFileLocation(final String fileLocation) {
-		this.fileLocation = fileLocation;
+	public void setRoot(final String root) {
+		this.root = root;
 	}
 
 }

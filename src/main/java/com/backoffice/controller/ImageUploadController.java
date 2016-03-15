@@ -16,6 +16,7 @@ import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -52,6 +53,7 @@ public class ImageUploadController {
 		}
 	}
 
+	@ResponseBody
 	@RequestMapping(value = "/all", method = RequestMethod.GET, produces = "application/json")
 	public Iterable<ImageModel> getAllImages() {
 		LOG.debug("getAllImages is called");

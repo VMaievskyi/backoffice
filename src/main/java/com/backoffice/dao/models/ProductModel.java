@@ -12,6 +12,8 @@ import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity(name = "products")
@@ -43,8 +45,9 @@ public class ProductModel {
 			CascadeType.ALL })
 	private List<ProductAttributeModel> attributes;
 
-	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, optional = true)
 	@JoinColumn(name = "stock_id")
+	@NotFound(action = NotFoundAction.IGNORE)
 	private StockModel stock;
 
 	public String getDescription() {
@@ -97,7 +100,7 @@ public class ProductModel {
 		return stock;
 	}
 
-	public void setStock(StockModel stock) {
+	public void setStock(final StockModel stock) {
 		this.stock = stock;
 	}
 

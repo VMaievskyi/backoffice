@@ -1,5 +1,6 @@
 package com.backoffice.dao.models;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -8,23 +9,24 @@ import javax.persistence.Transient;
 
 import com.backoffice.pojo.StockStatus;
 
-@Entity(name="stocks")
+@Entity(name = "stocks")
 public class StockModel {
 
 	@Id
+	@Column(unique = true)
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	
+
 	private Long availabeQuantity;
 	private Long reservedQuantity;
 	@Transient
 	private StockStatus stockStatus;
-	
+
 	public Long getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(final Long id) {
 		this.id = id;
 	}
 
@@ -32,7 +34,7 @@ public class StockModel {
 		return availabeQuantity;
 	}
 
-	public void setAvailabeQuantity(Long availabeQuantity) {
+	public void setAvailabeQuantity(final Long availabeQuantity) {
 		this.availabeQuantity = availabeQuantity;
 	}
 
@@ -40,7 +42,7 @@ public class StockModel {
 		return reservedQuantity;
 	}
 
-	public void setReservedQuantity(Long reservedQuantity) {
+	public void setReservedQuantity(final Long reservedQuantity) {
 		this.reservedQuantity = reservedQuantity;
 	}
 
@@ -48,8 +50,8 @@ public class StockModel {
 		return stockStatus;
 	}
 
-	public void setStockStatus(StockStatus stockStatus) {
+	public void setStockStatus(final StockStatus stockStatus) {
 		this.stockStatus = stockStatus;
 	}
-    
+
 }

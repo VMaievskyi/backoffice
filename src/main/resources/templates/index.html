@@ -1,27 +1,46 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8"/>
+<meta charset="UTF-8" />
 <title>Insert title here</title>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 </head>
 <body>
 	<form method="post" id="createProductForm">
-		<label>Sku:</label><input name="sku" type="text"/>
-		<label>Name:</label><input name="name" type="text"/>
-		<label>Description</label><input name="description" type="text"/>
-		<label>Price</label><input name="price" type="text"/>
-		<button type="submit">OK</button>	
+		<label>Sku:</label><input name="sku" type="text" /> 
+		<label>Name:</label><input name="name" type="text" />
+		<label>Description</label><input name="description" type="text" /> 
+		<label>Price</label><input name="price" type="text" />
+		<button type="submit" name="button">OK</button>
 	</form>
-	
+
 	<form action="/image" method="post" enctype="multipart/form-data">
-		<label>Image name:</label><input name="name" type="text"/><br/>
-		<label>Image file:</label><input name="file" type="file"/><br/>
+		<label>Image name:</label><input name="name" type="text" /><br /> 
+		<label>Image
+			file:</label><input name="file" type="file" /><br />
 		<button type="submit">Submit</button>
 	</form>
+
+	<button id="loadImages">pictures</button>
+	<button id="iterateImages">iterate</button>
+
+	<div id="imageList"></div>
+	<input id="images"/>
+
 </body>
 
 <script type="text/javascript">
+
+$(function(){
+	$('#iterateImages').on('click',function(e) {
+		var arr = $('#imageList img').map(function() { return this.src; }).get()
+		console.log(arr)
+		$('#images').val(JSON.stringify($(arr).serializeObject()))
+	})	
+	});
+
+
 $(function() {
 	$('#createProductForm').on('submit',function (e) {
 		e.preventDefault();
@@ -30,13 +49,32 @@ $(function() {
 	        cache: false,
 	        type: 'POST',
 	        contentType: 'application/json',
-	        data : JSON.stringify($('form').serializeObject()),
+	        data : JSON.stringify($('#createProductForm').serializeObject()),
 	        success: function(json) {
-	            alert('all done');
+	            alert('');
 	        }
 	    });
 	});
 });
+
+$(function(){
+	$('#loadImages').on('click',function(e) {
+	e.preventDefault();
+	$.ajax({
+		url:'/image/all',
+		type: 'get',
+		success: function(json) {
+			var data = json;
+			console.log(data);
+			$.each(data, function(i,item){
+				$('#imageList').append('<div>'+'<img src="upload-dir/'+item.imageName+'.jpg" name="imageName"/></div>');
+			})
+		}
+	})})
+});
+
+
+
 $.fn.serializeObject = function()
 {
     var o = {};

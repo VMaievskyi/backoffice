@@ -11,7 +11,7 @@ public class AddressModel {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long id;
+	private Long id;
 
 	private String country;
 	private String postalCode;

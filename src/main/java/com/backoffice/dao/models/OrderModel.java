@@ -13,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
@@ -31,12 +32,10 @@ public class OrderModel implements Serializable {
 	@Enumerated
 	private OrderStatus orderStatus;
 
-	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.ALL })
-	@JoinColumn(name = "ENTRY_ID")
+	@OneToMany(fetch = FetchType.LAZY, cascade = { CascadeType.ALL })
 	private List<OrderEntryModel> orderEntries;
 
-	@ManyToOne(optional = false)
-	@JoinColumn(name = "CUST_ID")
+	@ManyToOne(targetEntity = CustomerModel.class, fetch = FetchType.EAGER)
 	private CustomerModel customer;
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, optional = false)
 	@JoinColumn(name = "delivery_id")
@@ -47,11 +46,11 @@ public class OrderModel implements Serializable {
 
 	private Double totalPrice;
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(final long id) {
+	public void setId(final Long id) {
 		this.id = id;
 	}
 

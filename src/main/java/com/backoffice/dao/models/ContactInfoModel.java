@@ -10,7 +10,7 @@ public class ContactInfoModel {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long id;
+	private Long id;
 	private String mobilePhone;
 	private String homePhone;
 	private String email;

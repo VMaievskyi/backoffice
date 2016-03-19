@@ -18,7 +18,7 @@ public class CustomerModel {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long id;
+	private Long id;
 
 	private String firstName;
 	private String lastName;
@@ -33,11 +33,11 @@ public class CustomerModel {
 	@Temporal(TemporalType.DATE)
 	private Date birthDate;
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(final long id) {
+	public void setId(final Long id) {
 		this.id = id;
 	}
 

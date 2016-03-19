@@ -1,31 +1,32 @@
 package com.backoffice.dao.models;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class OrderEntryModel {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long id;
+	private Long id;
 
-	@OneToMany(mappedBy = "product", targetEntity = ProductModel.class, fetch = FetchType.EAGER)
+	@ManyToOne
+	@JoinColumn(name = "CUST_ID")
 	private ProductModel product;
 
 	private int quantity;
 
 	private double totalPrice;
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(final long id) {
+	public void setId(final Long id) {
 		this.id = id;
 	}
 

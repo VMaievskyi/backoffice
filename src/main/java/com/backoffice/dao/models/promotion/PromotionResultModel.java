@@ -2,19 +2,17 @@ package com.backoffice.dao.models.promotion;
 
 import java.util.List;
 
-import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import com.backoffice.dao.models.OrderEntryModel;
 
-@Entity
 public class PromotionResultModel {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long id;
+	private Long id;
 
 	private double discount;
 	private List<OrderEntryModel> consumedEntries;
@@ -40,6 +38,14 @@ public class PromotionResultModel {
 
 	public void setConsumedEntries(final List<OrderEntryModel> consumedEntries) {
 		this.consumedEntries = consumedEntries;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(final Long id) {
+		this.id = id;
 	}
 
 }

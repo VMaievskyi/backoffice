@@ -16,7 +16,7 @@ public abstract class DeliveryTypeModel {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long id;
+	private Long id;
 
 	private String typeName;
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -25,11 +25,11 @@ public abstract class DeliveryTypeModel {
 
 	private double cost;
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(final long id) {
+	public void setId(final Long id) {
 		this.id = id;
 	}
 

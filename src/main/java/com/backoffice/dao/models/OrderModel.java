@@ -44,6 +44,8 @@ public class OrderModel implements Serializable {
 
 	@Transient
 	private List<PromotionModel> promotions;
+	@Transient
+	private double subTotal;
 
 	private Double totalPrice;
 
@@ -109,6 +111,18 @@ public class OrderModel implements Serializable {
 
 	public void setPromotions(final List<PromotionModel> promotions) {
 		this.promotions = promotions;
+	}
+
+	public double getSubTotal() {
+		return subTotal;
+	}
+
+	public void setSubTotal(final double subTotal) {
+		this.subTotal = subTotal;
+	}
+
+	public void setId(final long id) {
+		this.id = id;
 	}
 
 }

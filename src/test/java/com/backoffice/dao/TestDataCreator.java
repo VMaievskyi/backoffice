@@ -20,8 +20,8 @@ import com.backoffice.dao.models.delivery.DeliveryTypeModel;
 import com.google.common.collect.Lists;
 
 public class TestDataCreator {
-	private static final int QUANTITY = 10;
-	private static final double TOTAL_PRICE = 100d;
+	public static final int QUANTITY = 10;
+	public static final double TOTAL_PRICE = 100d;
 	public static final String LAST_NAME = "lastName";
 	public static final String NAME = "name";
 	public static final String MOBILE_PHONE = "+38097000000";
@@ -146,11 +146,16 @@ public class TestDataCreator {
 		order.setDeliveryInfo(TestDataCreator.createDeliveryInfo());
 		order.setOrderStatus(OrderStatus.CREATED);
 		order.setTotalPrice(TOTAL_PRICE);
+		final OrderEntryModel entry = createOrderEntry();
+		order.setOrderEntries(Lists.newArrayList(entry));
+		return order;
+	}
+
+	public static OrderEntryModel createOrderEntry() {
 		final OrderEntryModel entry = new OrderEntryModel();
 		entry.setProduct(createProduct());
 		entry.setQuantity(QUANTITY);
-		order.setOrderEntries(Lists.newArrayList(entry));
-		return order;
+		return entry;
 	}
 
 }

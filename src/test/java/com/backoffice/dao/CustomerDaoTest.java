@@ -1,6 +1,19 @@
 package com.backoffice.dao;
 
-import java.util.Date;
+import static com.backoffice.dao.TestDataCreator.ADDITIONAL_IINFO;
+import static com.backoffice.dao.TestDataCreator.APT;
+import static com.backoffice.dao.TestDataCreator.BUILDING;
+import static com.backoffice.dao.TestDataCreator.DOOR_CODE;
+import static com.backoffice.dao.TestDataCreator.EMAIL;
+import static com.backoffice.dao.TestDataCreator.HOME_PHONE;
+import static com.backoffice.dao.TestDataCreator.KYIV;
+import static com.backoffice.dao.TestDataCreator.LAST_NAME;
+import static com.backoffice.dao.TestDataCreator.MOBILE_PHONE;
+import static com.backoffice.dao.TestDataCreator.NAME;
+import static com.backoffice.dao.TestDataCreator.POSTAL_CODE;
+import static com.backoffice.dao.TestDataCreator.STREAT;
+import static com.backoffice.dao.TestDataCreator.UKRAINE;
+import static com.backoffice.dao.TestDataCreator.createCustomer;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -20,19 +33,6 @@ import com.google.common.collect.Iterables;
 @SpringApplicationConfiguration(Starter.class)
 public class CustomerDaoTest {
 
-	private static final String LAST_NAME = "lastName";
-	private static final String NAME = "name";
-	private static final String MOBILE_PHONE = "+38097000000";
-	private static final String HOME_PHONE = "31119878";
-	private static final String EMAIL = "email";
-	private static final String ADDITIONAL_IINFO = "additional Iinfo";
-	private static final String APT = "11";
-	private static final String BUILDING = "16/2";
-	private static final String STREAT = "streat 1";
-	private static final String DOOR_CODE = "13";
-	private static final String POSTAL_CODE = "3111";
-	private static final String KYIV = "kyiv";
-	private static final String UKRAINE = "Ukraine";
 	@Autowired
 	private CustomerDao testInstance;
 
@@ -73,42 +73,6 @@ public class CustomerDaoTest {
 		Assert.assertEquals("wrong  door code", DOOR_CODE, address.getDoorCode());
 		Assert.assertEquals("wrong postal code", POSTAL_CODE, address.getPostalCode());
 		Assert.assertEquals("wrong ", STREAT, address.getStreet());
-	}
-
-	private CustomerModel createCustomer() {
-		final AddressModel addressModel = createAddress();
-		final ContactInfoModel contactInfo = createContactInfo();
-
-		final CustomerModel customer = new CustomerModel();
-		customer.setAnonimous(Boolean.TRUE);
-		customer.setBirthDate(new Date());
-		customer.setContactInfo(contactInfo);
-		customer.setFirstName(NAME);
-		customer.setGender(Boolean.TRUE);
-		customer.setLastName(LAST_NAME);
-		customer.setSavedAddress(addressModel);
-		return customer;
-	}
-
-	private ContactInfoModel createContactInfo() {
-		final ContactInfoModel contactInfo = new ContactInfoModel();
-		contactInfo.setEmail(EMAIL);
-		contactInfo.setHomePhone(HOME_PHONE);
-		contactInfo.setMobilePhone(MOBILE_PHONE);
-		return contactInfo;
-	}
-
-	private AddressModel createAddress() {
-		final AddressModel address = new AddressModel();
-		address.setCountry(UKRAINE);
-		address.setCity(KYIV);
-		address.setPostalCode(POSTAL_CODE);
-		address.setDoorCode(DOOR_CODE);
-		address.setStreet(STREAT);
-		address.setBuilding(BUILDING);
-		address.setAppartment(APT);
-		address.setAdditionalInfo(ADDITIONAL_IINFO);
-		return address;
 	}
 
 }

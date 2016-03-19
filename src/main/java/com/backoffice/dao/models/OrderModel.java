@@ -26,6 +26,7 @@ public class OrderModel implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(unique = true)
 	private long orderCode;
 

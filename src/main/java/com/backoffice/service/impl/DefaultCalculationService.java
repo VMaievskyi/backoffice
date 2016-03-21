@@ -6,8 +6,8 @@ import java.util.stream.DoubleStream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.backoffice.dao.models.CartModel;
 import com.backoffice.dao.models.OrderEntryModel;
-import com.backoffice.dao.models.OrderModel;
 import com.backoffice.service.CalculationService;
 import com.backoffice.service.PromotionService;
 import com.google.common.base.Preconditions;
@@ -19,7 +19,7 @@ public class DefaultCalculationService implements CalculationService {
 	private PromotionService promotionService;
 
 	@Override
-	public void calculateOrder(final OrderModel order) {
+	public void calculateOrder(final CartModel order) {
 		Preconditions.checkNotNull(order);
 		if (recalculationRequired()) {
 			recalculate(order);
@@ -27,7 +27,7 @@ public class DefaultCalculationService implements CalculationService {
 	}
 
 	@Override
-	public void recalculate(final OrderModel order) {
+	public void recalculate(final CartModel order) {
 		Preconditions.checkNotNull(order);
 		promotionService.applyPromotions(order);
 
@@ -43,7 +43,7 @@ public class DefaultCalculationService implements CalculationService {
 		return Boolean.TRUE;
 	}
 
-	private void calculateEntryPrices(final OrderModel order) {
+	private void calculateEntryPrices(final CartModel order) {
 		final List<OrderEntryModel> orderEntries = order.getOrderEntries();
 		orderEntries.forEach(entry -> entry.setTotalPrice(entry.getProduct().getPrice() * entry.getQuantity()));
 

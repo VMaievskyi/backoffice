@@ -28,4 +28,9 @@ public class DefaultProductService implements ProductService {
 		productDao.save(model);
 	}
 
+	@Override
+	public ProductModel getByCode(final String productCode) {
+		return productDao.findOne(productCode);
+	}
+
 }

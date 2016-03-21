@@ -9,4 +9,6 @@ public interface ProductService {
 	Iterable<ProductModel> getProductByName(String name);
 
 	void save(ProductModel model);
+
+	ProductModel getByCode(String productCode);
 }

@@ -1,8 +1,8 @@
 package com.backoffice.service;
 
-import com.backoffice.dao.models.OrderModel;
+import com.backoffice.dao.models.CartModel;
 
 public interface PromotionService {
 
-	void applyPromotions(OrderModel order);
+	void applyPromotions(CartModel order);
 }

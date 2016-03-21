@@ -28,6 +28,11 @@ public class CustomerModel {
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "address")
 	private AddressModel savedAddress;
+
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "id")
+	private CartModel cart;
+
 	private boolean gender;
 	private boolean isAnonimous;
 	@Temporal(TemporalType.DATE)
@@ -95,6 +100,14 @@ public class CustomerModel {
 
 	public void setSavedAddress(final AddressModel savedAddress) {
 		this.savedAddress = savedAddress;
+	}
+
+	public CartModel getCart() {
+		return cart;
+	}
+
+	public void setCart(final CartModel cart) {
+		this.cart = cart;
 	}
 
 }

@@ -119,11 +119,11 @@ public class TestDataCreator {
 
 	public static ArrayList<ImageModel> createImages(final ProductModel product) {
 		final ImageModel image1 = new ImageModel();
-		image1.setImageName("image1Name");
+		image1.setImageName("image1Name" + UUID.randomUUID().toString());
 		image1.setProduct(product);
 
 		final ImageModel image2 = new ImageModel();
-		image2.setImageName("image2name");
+		image2.setImageName("image2name" + UUID.randomUUID().toString());
 		image2.setProduct(product);
 
 		final ArrayList<ImageModel> imageList = Lists.newArrayList(image1, image2);

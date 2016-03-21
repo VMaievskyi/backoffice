@@ -1,10 +1,10 @@
 package com.backoffice.service;
 
-import com.backoffice.dao.models.OrderModel;
+import com.backoffice.dao.models.CartModel;
 
 public interface CalculationService {
 
-	void calculateOrder(OrderModel order);
+	void calculateOrder(CartModel order);
 
-	void recalculate(OrderModel order);
+	void recalculate(CartModel order);
 }

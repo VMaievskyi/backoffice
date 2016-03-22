@@ -17,6 +17,9 @@ import com.backoffice.service.CalculationService;
 import com.backoffice.service.CartService;
 import com.backoffice.service.ProductService;
 import com.backoffice.service.StockService;
+import com.backoffice.service.strategy.EntryModeificationStrategy;
+import com.backoffice.service.strategy.EntryModificationType;
+import com.backoffice.service.strategy.impl.EntryModificationStrategyFactory;
 
 @Component
 public class DefaultCartService implements CartService {
@@ -28,48 +31,35 @@ public class DefaultCartService implements CartService {
 	private StockService stockService;
 	@Autowired
 	private CalculationService calculationService;
+	@Autowired
+	private EntryModificationStrategyFactory entryModificationStrategyFactory;
 
 	@Override
 	public CartModel modifyCartEntries(final CartModel cart, final String productCode, final int quantity) {
-		// TODO: CHECK IF STOCK SUFFICIENT
 		final ProductModel product = productService.getByCode(productCode);
 		if (product == null) {
 			throw new NotFoundException(String.format("profuct with sku: '%s' not found", productCode));
 		}
+		if (quantity <= NumberUtils.INTEGER_ZERO) {
+			throw new BadRequestException("cart.add.new.quantity.wrong");
+		}
+
+		EntryModeificationStrategy strategy;
+		int stockAdjustment;
 
 		final Optional<OrderEntryModel> entry = cart.getOrderEntries().stream()
 				.filter(lambdaEntry -> lambdaEntry.getProduct().getSku().equals(productCode)).findFirst();
 		if (entry.isPresent()) {
-			final OrderEntryModel entryToProcess = entry.get();
-			modifyEntryCount(cart, entryToProcess, entryToProcess.getQuantity() + quantity);
+			strategy = entryModificationStrategyFactory.getStrategy(EntryModificationType.EXISTS);
+			stockAdjustment = entry.get().getQuantity() + quantity;
 		} else {
-			createEntry(cart, product, quantity);
+			strategy = entryModificationStrategyFactory.getStrategy(EntryModificationType.NEW);
+			stockAdjustment = quantity;
 		}
+		stockService.adjustStockLevel(product.getSku(), stockAdjustment);
+		strategy.modifyEntryQuantity(cart, product, quantity);
 		calculationService.recalculate(cart);
 		return cartDao.save(cart);
-	}
-
-	private void createEntry(final CartModel cart, final ProductModel product, final int quantity) {
-		if (quantity <= NumberUtils.INTEGER_ZERO) {
-			throw new BadRequestException("cart.add.new.quantity.wrong");
-		}
-		final OrderEntryModel entry = new OrderEntryModel();
-		entry.setProduct(product);
-		entry.setQuantity(quantity);
-		cart.getOrderEntries().add(entry);
-	}
-
-	private void modifyEntryCount(final CartModel cart, final OrderEntryModel entry, final int newQuantity) {
-		int stockAdjustment = NumberUtils.INTEGER_ZERO;
-		if (newQuantity <= NumberUtils.INTEGER_ZERO) {
-			cart.getOrderEntries().remove(entry);
-			stockAdjustment = entry.getQuantity();
-		} else {
-			stockAdjustment = entry.getQuantity() - newQuantity;
-			entry.setQuantity(newQuantity);
-		}
-
-		stockService.adjustStockLevel(entry.getProduct().getSku(), stockAdjustment);
 	}
 
 	@Override

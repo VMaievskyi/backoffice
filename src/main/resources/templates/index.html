@@ -32,49 +32,6 @@
 
 <script type="text/javascript">
 
-$(function(){
-	$('#iterateImages').on('click',function(e) {
-		var arr = $('#imageList img').map(function() { return this.src; }).get()
-		console.log(arr)
-		$('#images').val(JSON.stringify($(arr).serializeObject()))
-	})	
-	});
-
-
-$(function() {
-	$('#createProductForm').on('submit',function (e) {
-		e.preventDefault();
-	    $.ajax({
-	        url: '/products',
-	        cache: false,
-	        type: 'POST',
-	        contentType: 'application/json',
-	        data : JSON.stringify($('#createProductForm').serializeObject()),
-	        success: function(json) {
-	            alert('');
-	        }
-	    });
-	});
-});
-
-$(function(){
-	$('#loadImages').on('click',function(e) {
-	e.preventDefault();
-	$.ajax({
-		url:'/image/all',
-		type: 'get',
-		success: function(json) {
-			var data = json;
-			console.log(data);
-			$.each(data, function(i,item){
-				$('#imageList').append('<div>'+'<img src="upload-dir/'+item.imageName+'.jpg" name="imageName"/></div>');
-			})
-		}
-	})})
-});
-
-
-
 $.fn.serializeObject = function()
 {
     var o = {};
@@ -91,5 +48,46 @@ $.fn.serializeObject = function()
     });
     return o;
 };
+
+
+$(function(){
+	$('#iterateImages').on('click',function(e) {
+		var arr = $('#imageList img').map(function() { 
+			var img = $(this);
+			return {"name": img.data('name'), "src": img.attr("src")};
+		}).get();
+		console.log(JSON.stringify(arr));
+	});
+	
+	$('#createProductForm').on('submit',function (e) {
+		e.preventDefault();
+	    $.ajax({
+	        url: '/products',
+	        cache: false,
+	        type: 'POST',
+	        contentType: 'application/json',
+	        data : JSON.stringify($('#createProductForm').serializeObject()),
+	        success: function(json) {
+	            alert('');
+	        }
+	    });
+	});
+	
+	$('#loadImages').on('click',function(e) {
+		e.preventDefault();
+		$.ajax({
+			url:'/image/all',
+			type: 'get',
+			success: function(json) {
+				var data = json;
+				console.log(data);
+				$.each(data, function(i,item){
+					$('#imageList').append('<div>'+'<img src="upload-dir/'+item.imageName+'.jpg" data-name="imageName"/></div>');
+				})
+			}
+		})});
+	
+	
+});
 </script>
 </html>

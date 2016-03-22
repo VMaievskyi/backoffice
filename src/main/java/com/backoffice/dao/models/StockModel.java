@@ -1,5 +1,7 @@
 package com.backoffice.dao.models;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,7 +12,7 @@ import javax.persistence.Transient;
 import com.backoffice.pojo.StockStatus;
 
 @Entity(name = "stocks")
-public class StockModel {
+public class StockModel implements Serializable {
 
 	@Id
 	@Column(unique = true)

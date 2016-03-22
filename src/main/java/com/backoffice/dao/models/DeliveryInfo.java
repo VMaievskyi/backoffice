@@ -11,7 +11,7 @@ import javax.persistence.OneToOne;
 
 import com.backoffice.dao.models.delivery.DeliveryTypeModel;
 
-@Entity
+@Entity(name = "delivery")
 public class DeliveryInfo {
 
 	@Id

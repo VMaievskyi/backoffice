@@ -48,6 +48,7 @@ public class ProductDaoTest {
 		Assert.assertEquals("wrong stock available", AVAILABLE_QUANTITY, product.getStock().getAvailabeQuantity(),
 				0.01);
 		Assert.assertEquals("wrong stock available", RESERVED_QUANTITY, product.getStock().getReservedQuantity(), 0.01);
+		Assert.assertNotNull("Stock id not set", product.getStock().getId());
 	}
 
 }

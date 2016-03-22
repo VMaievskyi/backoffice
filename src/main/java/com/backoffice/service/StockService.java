@@ -1,6 +1,8 @@
 package com.backoffice.service;
 
+import com.backoffice.dao.models.ProductModel;
+
 public interface StockService {
 
-	void adjustStockLevel(String sku, int stockAdjustment);
+	void adjustStockLevel(ProductModel product, int stockAdjustment);
 }

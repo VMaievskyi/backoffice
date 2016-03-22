@@ -45,7 +45,7 @@ public class ProductModel {
 			CascadeType.ALL })
 	private List<ProductAttributeModel> attributes;
 
-	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, optional = true)
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = true)
 	@JoinColumn(name = "stock_id")
 	@NotFound(action = NotFoundAction.IGNORE)
 	private StockModel stock;

@@ -37,12 +37,7 @@ public class DefaultCartService implements CartService {
 	@Override
 	public CartModel modifyCartEntries(final CartModel cart, final String productCode, final int quantity) {
 		final ProductModel product = productService.getByCode(productCode);
-		if (product == null) {
-			throw new NotFoundException(String.format("profuct with sku: '%s' not found", productCode));
-		}
-		if (quantity <= NumberUtils.INTEGER_ZERO) {
-			throw new BadRequestException("cart.add.new.quantity.wrong");
-		}
+		checkInput(productCode, quantity, product);
 
 		EntryModeificationStrategy strategy;
 		int stockAdjustment;
@@ -56,10 +51,19 @@ public class DefaultCartService implements CartService {
 			strategy = entryModificationStrategyFactory.getStrategy(EntryModificationType.NEW);
 			stockAdjustment = quantity;
 		}
-		stockService.adjustStockLevel(product.getSku(), stockAdjustment);
+		stockService.adjustStockLevel(product, stockAdjustment);
 		strategy.modifyEntryQuantity(cart, product, quantity);
 		calculationService.recalculate(cart);
 		return cartDao.save(cart);
+	}
+
+	private void checkInput(final String productCode, final int quantity, final ProductModel product) {
+		if (product == null) {
+			throw new NotFoundException(String.format("profuct with sku: '%s' not found", productCode));
+		}
+		if (quantity <= NumberUtils.INTEGER_ZERO) {
+			throw new BadRequestException("cart.add.new.quantity.wrong");
+		}
 	}
 
 	@Override

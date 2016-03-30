@@ -22,9 +22,7 @@ public class CustomerModel {
 
 	private String firstName;
 	private String lastName;
-	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name = "contact_info")
-	private ContactInfoModel contactInfo;
+
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "address")
 	private AddressModel savedAddress;
@@ -60,14 +58,6 @@ public class CustomerModel {
 
 	public void setLastName(final String lastName) {
 		this.lastName = lastName;
-	}
-
-	public ContactInfoModel getContactInfo() {
-		return contactInfo;
-	}
-
-	public void setContactInfo(final ContactInfoModel contactInfo) {
-		this.contactInfo = contactInfo;
 	}
 
 	public boolean isGender() {

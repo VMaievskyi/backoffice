@@ -25,7 +25,7 @@ public class ImageModel implements Serializable {
 	private String imageName;
 
 	@ManyToOne(optional = true, fetch = FetchType.LAZY)
-	@JoinColumn(name = "sku", referencedColumnName = "sku")
+	@JoinColumn(name = "sku")
 	private ProductModel product;
 
 	public Long getId() {

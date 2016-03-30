@@ -7,14 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.backoffice.dao.models.CartModel;
-import com.backoffice.dao.models.CustomerModel;
 import com.backoffice.dao.models.DeliveryInfo;
 import com.backoffice.dao.models.OrderEntryModel;
 import com.backoffice.facade.converter.AbstractConverter;
 import com.backoffice.facade.converter.Converter;
 import com.backoffice.facade.converter.data.CartData;
 import com.backoffice.facade.converter.data.CartEntryData;
-import com.backoffice.facade.converter.data.CustomerData;
 import com.backoffice.facade.converter.data.DeliveryInfoData;
 import com.google.common.base.Preconditions;
 
@@ -25,8 +23,6 @@ public class CartConverter extends AbstractConverter<CartModel, CartData> {
 	private Converter<DeliveryInfo, DeliveryInfoData> deliveryInfoConverter;
 	@Autowired
 	private Converter<OrderEntryModel, CartEntryData> cartEntryConverter;
-	@Autowired
-	private Converter<CustomerModel, CustomerData> customerConverter;
 
 	@Override
 	public CartData convert(final CartModel source) {
@@ -44,7 +40,6 @@ public class CartConverter extends AbstractConverter<CartModel, CartData> {
 		target.setSubTotal(source.getSubTotal());
 		target.setDeliveryInfoData(deliveryInfoConverter.convert(source.getDeliveryInfo()));
 		target.setCartEntryData(cartEntryConverter.convertAll(source.getOrderEntries()));
-		target.setCustomerData(customerConverter.convert(source.getCustomer()));
 		// target.setBillingInfoData(billingInfoConverter.convert(source));
 
 	}

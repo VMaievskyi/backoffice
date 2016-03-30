@@ -20,6 +20,9 @@ public class DeliveryInfo {
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "delivery_type")
 	private DeliveryTypeModel deliveryType;
+	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinColumn(name = "contact_info")
+	private ContactInfoModel contactInfo;
 
 	public DeliveryTypeModel getDeliveryType() {
 		return deliveryType;
@@ -34,6 +37,18 @@ public class DeliveryInfo {
 	}
 
 	public void setId(final Long id) {
+		this.id = id;
+	}
+
+	public ContactInfoModel getContactInfo() {
+		return contactInfo;
+	}
+
+	public void setContactInfo(final ContactInfoModel contactInfo) {
+		this.contactInfo = contactInfo;
+	}
+
+	public void setId(final long id) {
 		this.id = id;
 	}
 

@@ -7,6 +7,8 @@ import static com.backoffice.dao.TestDataCreator.PRODUCT_PRICE;
 import static com.backoffice.dao.TestDataCreator.RESERVED_QUANTITY;
 import static com.backoffice.dao.TestDataCreator.createProduct;
 
+import javax.transaction.Transactional;
+
 import org.apache.commons.collections.CollectionUtils;
 import org.junit.Assert;
 import org.junit.Test;
@@ -17,8 +19,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.backoffice.Starter;
 import com.backoffice.dao.models.ProductModel;
-import com.google.common.collect.Iterables;
 
+@Transactional
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(Starter.class)
 public class ProductDaoTest {
@@ -36,8 +38,7 @@ public class ProductDaoTest {
 	public void shouldReadProductWithItsFields() {
 		final ProductModel productToSave = createProduct();
 		testInstance.save(productToSave);
-		final Iterable<ProductModel> allProducts = testInstance.findAll();
-		final ProductModel product = Iterables.getFirst(allProducts, null);
+		final ProductModel product = testInstance.findOne(productToSave.getSku());
 		Assert.assertNotNull("No product found", product);
 		Assert.assertEquals("wrong DESCRIPTION", PRODUCT_DESCRIPTION, product.getDescription());
 		Assert.assertNotNull(product.getSku());

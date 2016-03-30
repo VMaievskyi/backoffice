@@ -44,12 +44,10 @@ public class TestDataCreator {
 
 	public static CustomerModel createCustomer() {
 		final AddressModel addressModel = createAddress();
-		final ContactInfoModel contactInfo = createContactInfo();
 
 		final CustomerModel customer = new CustomerModel();
 		customer.setAnonimous(Boolean.TRUE);
 		customer.setBirthDate(new Date());
-		customer.setContactInfo(contactInfo);
 		customer.setFirstName(NAME);
 		customer.setGender(Boolean.TRUE);
 		customer.setLastName(LAST_NAME);
@@ -137,6 +135,8 @@ public class TestDataCreator {
 		type.setDeliveryAddress(createAddress());
 		type.setTypeName("nova poshta");
 		deliveryInfo.setDeliveryType(type);
+		final ContactInfoModel contactInfo = createContactInfo();
+		deliveryInfo.setContactInfo(contactInfo);
 		return deliveryInfo;
 	}
 

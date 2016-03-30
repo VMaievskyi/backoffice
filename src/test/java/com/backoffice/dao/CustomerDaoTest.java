@@ -4,11 +4,8 @@ import static com.backoffice.dao.TestDataCreator.ADDITIONAL_IINFO;
 import static com.backoffice.dao.TestDataCreator.APT;
 import static com.backoffice.dao.TestDataCreator.BUILDING;
 import static com.backoffice.dao.TestDataCreator.DOOR_CODE;
-import static com.backoffice.dao.TestDataCreator.EMAIL;
-import static com.backoffice.dao.TestDataCreator.HOME_PHONE;
 import static com.backoffice.dao.TestDataCreator.KYIV;
 import static com.backoffice.dao.TestDataCreator.LAST_NAME;
-import static com.backoffice.dao.TestDataCreator.MOBILE_PHONE;
 import static com.backoffice.dao.TestDataCreator.NAME;
 import static com.backoffice.dao.TestDataCreator.POSTAL_CODE;
 import static com.backoffice.dao.TestDataCreator.STREAT;
@@ -25,7 +22,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.backoffice.Starter;
 import com.backoffice.dao.models.AddressModel;
-import com.backoffice.dao.models.ContactInfoModel;
 import com.backoffice.dao.models.CustomerModel;
 import com.google.common.collect.Iterables;
 
@@ -60,10 +56,6 @@ public class CustomerDaoTest {
 	private void checkCustomer(final CustomerModel savedCustomer) {
 		Assert.assertEquals("wrong name", NAME, savedCustomer.getFirstName());
 		Assert.assertEquals("wrong last name", LAST_NAME, savedCustomer.getLastName());
-		final ContactInfoModel contactInfo = savedCustomer.getContactInfo();
-		Assert.assertEquals("wrong last", EMAIL, contactInfo.getEmail());
-		Assert.assertEquals("wrong home phone", HOME_PHONE, contactInfo.getHomePhone());
-		Assert.assertEquals("wrong  mobile phone", MOBILE_PHONE, contactInfo.getMobilePhone());
 		final AddressModel address = savedCustomer.getSavedAddress();
 		Assert.assertEquals("wrong additional info", ADDITIONAL_IINFO, address.getAdditionalInfo());
 		Assert.assertEquals("wrong apartment", APT, address.getAppartment());

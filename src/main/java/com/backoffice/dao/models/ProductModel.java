@@ -37,11 +37,11 @@ public class ProductModel {
 		this.name = name;
 	}
 
-	@OneToMany(mappedBy = "product", targetEntity = ImageModel.class, fetch = FetchType.EAGER, cascade = {
+	@OneToMany(mappedBy = "product", targetEntity = ImageModel.class, fetch = FetchType.LAZY, cascade = {
 			CascadeType.ALL })
 	private List<ImageModel> images;
 
-	@OneToMany(mappedBy = "product", targetEntity = ProductAttributeModel.class, fetch = FetchType.EAGER, cascade = {
+	@OneToMany(mappedBy = "product", targetEntity = ProductAttributeModel.class, fetch = FetchType.LAZY, cascade = {
 			CascadeType.ALL })
 	private List<ProductAttributeModel> attributes;
 

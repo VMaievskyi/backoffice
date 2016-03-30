@@ -1,24 +1,24 @@
 package com.backoffice.dao.models;
 
 import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-@Entity(name = "customer")
-public class CustomerModel {
+import jersey.repackaged.com.google.common.collect.Sets;
+
+@Entity(name = "user")
+public class UserModel {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+	private String userName;
 
 	private String firstName;
 	private String lastName;
@@ -36,13 +36,10 @@ public class CustomerModel {
 	@Temporal(TemporalType.DATE)
 	private Date birthDate;
 
-	public Long getId() {
-		return id;
-	}
+	private String password;
+	private boolean enabled;
 
-	public void setId(final Long id) {
-		this.id = id;
-	}
+	private final Set<UserRoleModel> userRole = Sets.newHashSet();
 
 	public String getFirstName() {
 		return firstName;
@@ -98,6 +95,34 @@ public class CustomerModel {
 
 	public void setCart(final CartModel cart) {
 		this.cart = cart;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(final String username) {
+		this.userName = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(final String password) {
+		this.password = password;
+	}
+
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(final boolean enabled) {
+		this.enabled = enabled;
+	}
+
+	public Set<UserRoleModel> getUserRole() {
+		return userRole;
 	}
 
 }

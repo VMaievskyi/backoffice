@@ -28,7 +28,7 @@ public class OrderDaoTest {
 	@Test
 	public void shouldCreateOrder() {
 		final OrderModel order = TestDataCreator.createOrder();
-		customerDao.save(order.getCustomer());
+		customerDao.save(order.getUser());
 		productDao.save(order.getOrderEntries().get(0).getProduct());
 		testInstance.save(order);
 		Assert.assertNotNull("id not set", order.getId());

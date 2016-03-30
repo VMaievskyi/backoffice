@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.backoffice.dao.models.CartModel;
 import com.backoffice.facade.CartFacade;
 import com.backoffice.facade.CustomerFacade;
+import com.backoffice.facade.converter.data.CartData;
 import com.backoffice.service.CartService;
 
 @Component
@@ -17,14 +18,14 @@ public class DefaultCartFacade implements CartFacade {
 	private CartService cartService;
 
 	@Override
-	public CartModel getSessionCart() {
-		return customerFacade.getCustomer().getCart();
+	public CartData getSessionCart() {
+		return customerFacade.getSessionCart();
 	}
 
 	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public CartModel addToCart(final String productCode, final int quantity) {
-		final CartModel cart = getSessionCart();
+		final CartModel cart = cartService.getSessionCart();
 		return cartService.modifyCartEntries(cart, productCode, quantity);
 	}
 

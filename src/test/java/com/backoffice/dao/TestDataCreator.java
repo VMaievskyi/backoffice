@@ -6,7 +6,6 @@ import java.util.UUID;
 
 import com.backoffice.dao.models.AddressModel;
 import com.backoffice.dao.models.ContactInfoModel;
-import com.backoffice.dao.models.CustomerModel;
 import com.backoffice.dao.models.DeliveryInfo;
 import com.backoffice.dao.models.ImageModel;
 import com.backoffice.dao.models.OrderEntryModel;
@@ -15,6 +14,7 @@ import com.backoffice.dao.models.OrderStatus;
 import com.backoffice.dao.models.ProductAttributeModel;
 import com.backoffice.dao.models.ProductModel;
 import com.backoffice.dao.models.StockModel;
+import com.backoffice.dao.models.UserModel;
 import com.backoffice.dao.models.delivery.CourierDeliveryModel;
 import com.backoffice.dao.models.delivery.DeliveryTypeModel;
 import com.google.common.collect.Lists;
@@ -42,10 +42,11 @@ public class TestDataCreator {
 	public static final double PRODUCT_PRICE = 5.5;
 	public static final double DOUBLE_COMPARISON_DELTA = 0.01;
 
-	public static CustomerModel createCustomer() {
+	public static UserModel createCustomer() {
 		final AddressModel addressModel = createAddress();
 
-		final CustomerModel customer = new CustomerModel();
+		final UserModel customer = new UserModel();
+		customer.setUserName(UUID.randomUUID().toString());
 		customer.setAnonimous(Boolean.TRUE);
 		customer.setBirthDate(new Date());
 		customer.setFirstName(NAME);
@@ -142,7 +143,7 @@ public class TestDataCreator {
 
 	public static OrderModel createOrder() {
 		final OrderModel order = new OrderModel();
-		order.setCustomer(TestDataCreator.createCustomer());
+		order.setUser(TestDataCreator.createCustomer());
 		order.setDeliveryInfo(TestDataCreator.createDeliveryInfo());
 		order.setOrderStatus(OrderStatus.CREATED);
 		order.setTotalPrice(TOTAL_PRICE);

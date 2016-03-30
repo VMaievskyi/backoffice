@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.backoffice.dao.models.CartModel;
 import com.backoffice.facade.CartFacade;
+import com.backoffice.facade.converter.data.CartData;
 
 @Controller
 @RequestMapping("/cart")
@@ -19,7 +20,7 @@ public class CartController {
 
 	@ResponseBody
 	@RequestMapping(method = RequestMethod.GET)
-	public CartModel getCart() {
+	public CartData getCart() {
 		return cartFacade.getSessionCart();
 	}
 

@@ -8,4 +8,6 @@ public interface CartService {
 
 	CartModel saveCart(CartModel cart);
 
+	CartModel getSessionCart();
+
 }

@@ -71,4 +71,9 @@ public class DefaultCartService implements CartService {
 		return cartDao.save(cart);
 	}
 
+	@Override
+	public CartModel getSessionCart() {
+		return null;
+	}
+
 }

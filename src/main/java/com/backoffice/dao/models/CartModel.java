@@ -35,8 +35,8 @@ public class CartModel implements Serializable {
 	@OneToMany(fetch = FetchType.LAZY, cascade = { CascadeType.ALL })
 	private List<OrderEntryModel> orderEntries;
 
-	@ManyToOne(targetEntity = CustomerModel.class, fetch = FetchType.EAGER)
-	private CustomerModel customer;
+	@ManyToOne(targetEntity = UserModel.class, fetch = FetchType.EAGER)
+	private UserModel user;
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, optional = false)
 	@JoinColumn(name = "delivery_id")
 	private DeliveryInfo deliveryInfo;
@@ -80,12 +80,12 @@ public class CartModel implements Serializable {
 		this.orderEntries = orderEntries;
 	}
 
-	public CustomerModel getCustomer() {
-		return customer;
+	public UserModel getUser() {
+		return user;
 	}
 
-	public void setCustomer(final CustomerModel customer) {
-		this.customer = customer;
+	public void setUser(final UserModel user) {
+		this.user = user;
 	}
 
 	public DeliveryInfo getDeliveryInfo() {

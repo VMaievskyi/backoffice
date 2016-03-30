@@ -1,9 +1,12 @@
 package com.backoffice.facade;
 
-import com.backoffice.dao.models.CustomerModel;
+import com.backoffice.dao.models.UserModel;
+import com.backoffice.facade.converter.data.CartData;
 
 public interface CustomerFacade {
 
-	CustomerModel getCustomer();
+	UserModel getCustomer();
+
+	CartData getSessionCart();
 
 }

@@ -22,7 +22,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.backoffice.Starter;
 import com.backoffice.dao.models.AddressModel;
-import com.backoffice.dao.models.CustomerModel;
+import com.backoffice.dao.models.UserModel;
 import com.google.common.collect.Iterables;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -38,22 +38,14 @@ public class CustomerDaoTest {
 	}
 
 	@Test
-	public void shouldCreateCustomer() {
-		final CustomerModel customer = createCustomer();
-
-		testInstance.save(customer);
-		Assert.assertNotNull("id not created", customer.getId());
-	}
-
-	@Test
 	public void shouldLoadCustomer() {
 		testInstance.save(createCustomer());
-		final Iterable<CustomerModel> customers = testInstance.findAll();
+		final Iterable<UserModel> customers = testInstance.findAll();
 		Assert.assertFalse("no customer found", Iterables.isEmpty(customers));
 		checkCustomer(Iterables.getLast(customers));
 	}
 
-	private void checkCustomer(final CustomerModel savedCustomer) {
+	private void checkCustomer(final UserModel savedCustomer) {
 		Assert.assertEquals("wrong name", NAME, savedCustomer.getFirstName());
 		Assert.assertEquals("wrong last name", LAST_NAME, savedCustomer.getLastName());
 		final AddressModel address = savedCustomer.getSavedAddress();

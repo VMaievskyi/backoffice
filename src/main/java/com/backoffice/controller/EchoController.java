@@ -7,7 +7,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class EchoController {
 
 	@RequestMapping("/")
-	public String getIndex(){
+	public String getIndex() {
 		return "index";
+	}
+
+	@RequestMapping("/login")
+	public String getLogin() {
+		return "login";
 	}
 }

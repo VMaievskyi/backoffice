@@ -15,21 +15,29 @@ import org.springframework.stereotype.Service;
 import com.backoffice.dao.UserDao;
 import com.backoffice.dao.models.UserModel;
 import com.backoffice.dao.models.UserRoleModel;
+import com.google.common.collect.Lists;
 
 @Service("userDetailsService")
 public class UserDetailProvideService implements UserDetailsService {
 
 	@Autowired
 	private UserDao userDao;
-	@Autowired
-	private CustomerService customerService;
 
 	@Override
 	public UserDetails loadUserByUsername(final String userName) throws UsernameNotFoundException {
 		final UserModel user = userDao.findOne(userName);
+		return user == null ? buildAnonUser() : getUserWithRoles(user);
+	}
+
+	private User buildAnonUser() {
+		return new User("anonym", null, Boolean.TRUE, true, true, true, Lists.newArrayList());
+	}
+
+	private User getUserWithRoles(final UserModel user) {
 		final Set<GrantedAuthority> authorities = buildUserAuthority(user.getUserRole());
 
-		return buildUserForAuthentication(user, authorities);
+		final User userForAuthentication = buildUserForAuthentication(user, authorities);
+		return userForAuthentication;
 	}
 
 	private User buildUserForAuthentication(final UserModel userModel, final Set<GrantedAuthority> authorities) {
@@ -42,7 +50,6 @@ public class UserDetailProvideService implements UserDetailsService {
 
 		return userRoles.parallelStream().map(role -> new SimpleGrantedAuthority(role.getRole()))
 				.collect(Collectors.toSet());
-
 	}
 
 }

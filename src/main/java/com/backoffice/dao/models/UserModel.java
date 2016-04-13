@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -39,6 +40,7 @@ public class UserModel {
 	private String password;
 	private boolean enabled;
 
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
 	private final Set<UserRoleModel> userRole = Sets.newHashSet();
 
 	public String getFirstName() {
@@ -102,7 +104,7 @@ public class UserModel {
 	}
 
 	public void setUserName(final String username) {
-		this.userName = username;
+		userName = username;
 	}
 
 	public String getPassword() {
